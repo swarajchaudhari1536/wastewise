@@ -384,7 +384,7 @@ function HeroSection() {
     alerts: 0,
     full: 0,
   });
-  const rafRef = useRef<number>();
+const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 100);
