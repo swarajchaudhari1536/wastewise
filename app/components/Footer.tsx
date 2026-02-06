@@ -199,7 +199,7 @@ export default function Footer() {
         {/* ── Bottom bar ── */}
         <div className="py-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-slate-500">
-            © {new Date().getFullYear()} WasteWise. All rights reserved.
+            © {new Date().getFullYear()} WasteWise. All rights reserved. Website by{" Swaraj Chaudhari"}.
           </p>
 
           <div className="flex items-center gap-6">
