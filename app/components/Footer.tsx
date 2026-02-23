@@ -145,7 +145,7 @@ export default function Footer() {
             {/* Contact info */}
             <div className="space-y-3 mb-6">
               {[
-                { icon: Mail, text: "hello@wastewise.io" },
+                { icon: Mail, text: "swarajchaudhari@gmail.com" },
                 { icon: Phone, text: "+1 (555) 123-4567" },
                 { icon: MapPin, text: "123 Green St, Eco City, EC 12345" },
               ].map((item) => (
