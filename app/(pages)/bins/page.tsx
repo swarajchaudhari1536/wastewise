@@ -150,15 +150,17 @@ export default function BinsPage() {
     });
   };
 
-  const filteredBins = bins.filter((bin) => {
-    const matchesSearch =
-      bin.binId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      bin.location.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      bin.location.area.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = !filterType || bin.wasteType === filterType;
-    const matchesStatus = !filterStatus || bin.status === filterStatus;
-    return matchesSearch && matchesType && matchesStatus;
-  });
+  const filteredBins = bins
+    .filter((bin) => {
+      const matchesSearch =
+        bin.binId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        bin.location.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        bin.location.area.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesType = !filterType || bin.wasteType === filterType;
+      const matchesStatus = !filterStatus || bin.status === filterStatus;
+      return matchesSearch && matchesType && matchesStatus;
+    })
+    .sort((a, b) => b.fillLevel - a.fillLevel);
 
   if (authLoading || loading) {
     return (

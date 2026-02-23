@@ -122,7 +122,7 @@ export default function MapPage() {
             </h1>
           </div>
           <p className="text-slate-500 ml-14">
-            Visualize all bin locations, fill levels &amp; statuses at a glance.
+            Visualize all bin locations, fill levels {"&"} statuses at a glance.
           </p>
         </div>
 

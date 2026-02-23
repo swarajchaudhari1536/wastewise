@@ -40,8 +40,8 @@ const getFillColor = (level: number) =>
   level >= 80
     ? BIN_COLORS.fill.full
     : level >= 40
-    ? BIN_COLORS.fill.half
-    : BIN_COLORS.fill.empty;
+      ? BIN_COLORS.fill.half
+      : BIN_COLORS.fill.empty;
 
 const getTypeColor = (type: string) =>
   BIN_COLORS.type[type as keyof typeof BIN_COLORS.type] ||
@@ -73,8 +73,8 @@ function addMarkers(L: any, layer: any, bins: Bin[]) {
       bin.status === "active"
         ? "background:#ecfdf5;color:#047857"
         : bin.status === "inactive"
-        ? "background:#f1f5f9;color:#64748b"
-        : "background:#fffbeb;color:#b45309";
+          ? "background:#f1f5f9;color:#64748b"
+          : "background:#fffbeb;color:#b45309";
 
     const popup = `
       <div style="min-width:240px;padding:4px;font-family:system-ui,sans-serif">
@@ -115,11 +115,8 @@ function MapComponentInner({ bins }: MapComponentProps) {
   const [mapReady, setMapReady] = useState(false);
 
   const center = useMemo((): [number, number] => {
-    if (bins.length === 0) return [40.7128, -74.006];
-    const latSum = bins.reduce((s, b) => s + b.location.latitude, 0);
-    const lngSum = bins.reduce((s, b) => s + b.location.longitude, 0);
-    return [latSum / bins.length, lngSum / bins.length];
-  }, [bins]);
+    return [19.0760, 72.8777]; // Mumbai
+  }, []);
 
   // Ref keeps the latest center available to the async init callback
   const centerRef = useRef(center);
@@ -137,7 +134,7 @@ function MapComponentInner({ bins }: MapComponentProps) {
 
       const map = L.map(containerRef.current, {
         center: centerRef.current,
-        zoom: 13,
+        zoom: 12,
         zoomControl: false,
         scrollWheelZoom: true,
       });
@@ -145,10 +142,10 @@ function MapComponentInner({ bins }: MapComponentProps) {
       L.control.zoom({ position: "bottomright" }).addTo(map);
 
       L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
           attribution:
-            '&copy; <a href="https://carto.com/">CARTO</a>',
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
           maxZoom: 19,
         }
       ).addTo(map);

@@ -2,13 +2,21 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 
-dotenv.config();
+// Load .env file
+dotenv.config({ path: ".env" });
 
+// Ensure MongoDB URI exists
+if (!process.env.MONGODB_URI) {
+  console.error("❌ MONGODB_URI not found in .env file");
+  process.exit(1);
+}
 
-const MONGODB_URI =
-  process.env.MONGO_URI || "mongodb://localhost:27017/smart-waste";
+const MONGODB_URI = process.env.MONGODB_URI;
 
+// --------------------
 // Schemas
+// --------------------
+
 const UserSchema = new mongoose.Schema(
   {
     name: String,
@@ -52,6 +60,10 @@ const WasteHistorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// --------------------
+// Seed Function
+// --------------------
+
 async function seed() {
   try {
     await mongoose.connect(MONGODB_URI);
@@ -65,10 +77,12 @@ async function seed() {
       mongoose.models.WasteHistory ||
       mongoose.model("WasteHistory", WasteHistorySchema);
 
+    // Clear old data
     await User.deleteMany({});
     await WasteBin.deleteMany({});
     await WasteHistory.deleteMany({});
 
+    // Create admin user
     const hashedPassword = await bcrypt.hash("admin123", 12);
 
     await User.create({
@@ -78,6 +92,7 @@ async function seed() {
       role: "admin",
     });
 
+    // Create bins
     const areas = ["Downtown", "Uptown", "Midtown", "Suburb", "Industrial"];
     const wasteTypes = ["general", "recyclable", "organic", "hazardous"];
 
@@ -99,6 +114,7 @@ async function seed() {
 
     await WasteBin.insertMany(bins);
 
+    // Create history
     const history = Array.from({ length: 30 }).map((_, i) => ({
       date: new Date(Date.now() - i * 86400000),
       totalCollected: Math.floor(Math.random() * 500) + 200,
@@ -113,10 +129,14 @@ async function seed() {
     await WasteHistory.insertMany(history);
 
     console.log("✅ Database seeded successfully");
-    console.log("Admin: admin@smartwaste.com / admin123");
+    console.log("Admin Login:");
+    console.log("Email: admin@smartwaste.com");
+    console.log("Password: admin123");
 
+    await mongoose.connection.close();
     process.exit(0);
   } catch (err) {
+    console.error("❌ Error seeding database:");
     console.error(err);
     process.exit(1);
   }

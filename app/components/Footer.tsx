@@ -198,9 +198,10 @@ export default function Footer() {
 
         {/* ── Bottom bar ── */}
         <div className="py-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-slate-500">
-            © {new Date().getFullYear()} WasteWise. All rights reserved. <br></br><center>Website by{" Swaraj Chaudhari"}</center> .
-          </p>
+          <div className="text-sm text-slate-500 text-center sm:text-left">
+            © {new Date().getFullYear()} WasteWise. All rights reserved. <br />
+            <span className="block mt-1">Website by{" Swaraj Chaudhari"}</span>
+          </div>
 
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
